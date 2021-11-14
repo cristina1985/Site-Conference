@@ -1,0 +1,69 @@
+﻿@model SIIT_Conference.Models.WorkshopDto
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>WorkshopDto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlacesAvailable" class="control-label"></label>
+                <input asp-for="PlacesAvailable" class="form-control" />
+                <span asp-validation-for="PlacesAvailable" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegistrationLink" class="control-label"></label>
+                <input asp-for="RegistrationLink" class="form-control" />
+                <span asp-validation-for="RegistrationLink" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="RegistrationOpened" /> @Html.DisplayNameFor(model => model.RegistrationOpened)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Prerequisites" class="control-label"></label>
+                <input asp-for="Prerequisites" class="form-control" />
+                <span asp-validation-for="Prerequisites" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShortDescription" class="control-label"></label>
+                <input asp-for="ShortDescription" class="form-control" />
+                <span asp-validation-for="ShortDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

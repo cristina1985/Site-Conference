@@ -1,0 +1,93 @@
+﻿@model SIIT_Conference.Models.TalkDto
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>TalkDto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Level" class="control-label"></label>
+                <input asp-for="Level" class="form-control" />
+                <span asp-validation-for="Level" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpeakerID" class="control-label"></label>
+                <speakers asp-for="SpeakerID" class="form-control" onchange="getSpeakerData(this);"></speakers>
+                @*<input asp-for="SpeakerID" class="form-control" /> *@
+                <span asp-validation-for="SpeakerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Dummy Info about the speaker</label>
+                <select class="form-control" id="info">
+                    <option>Please select an Option for the Speaker</option>
+                </select>
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="FeedbackEnabled" /> @Html.DisplayNameFor(model => model.FeedbackEnabled)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function getSpeakerData(event) {
+            var selectedId = event.options[event.selectedIndex].value;
+            $.ajax({
+                method: "GET",
+                url: "/Talks/GetSpeakerData/" + selectedId
+
+
+            })
+                .done(function (data) {
+                    console.log(data);
+                    //datasource=peste ce iteram, index este index-ul array-ului din datasource, value 
+                    //este valoarea de la pozitia din index
+                    // $.each(datasource, function (index,value) {
+
+                    // })
+
+                    $("#info").html("");
+                    $.each(data,function  (index, value) {
+                        var newOption = "<option value='" + value.id + "'>" + value.textToDisplay + "</option >";
+                        $("#info").append(newOption);
+                        console.log(newOption);
+                    });
+                });
+        }
+    </script>
+}

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<SIIT_Conference.Models.SpeakerDto>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WebSite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.Workshop.Name)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WebSite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Workshop.Name)
+                    </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "red", id = "edit-link" }) |
+
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { id = "delete-item" , onclick="ajaxDelete();"})*@
+                @*<button id="edit-link" onclick="ajaxDelete(@item.ID);">Delete</button>*@
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { onclick = "ajaxDelete()" })*@
+                <a href="javascript:void(0);" id="delete-item" onclick="ajaxDelete(@item.ID);">Delete</a>
+            </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<div id="content">
+
+</div>
+
+@section Scripts{
+    <script>
+
+        function ajaxDelete(id) {
+            $.ajax({
+                method: "DELETE",
+                url: "/speakers/delete/" + id            
+                
+
+            })
+                .done(function (data) {
+                    $("#content").text(data);
+                });
+
+        }
+
+    </script>
+}
+
